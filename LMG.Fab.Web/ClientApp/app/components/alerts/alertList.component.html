@@ -1,0 +1,203 @@
+<div class="x_panel">
+    <div class="form-horizontal col-md-12 compact well">
+        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+            <div class="row">
+                <label class="control-label col-md-4 compact">Type d'alerte :</label>
+                <select class="form-control compact col-md-8 " style="max-width:60%">
+                    <option value="all">---Tous---</option>
+                    <option value="all">Dossier</option>
+                    <option value="all">Tirage</option>
+                    <option value="all">Article</option>
+                </select>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-4 compact">element a chercher :</label>
+                <input type="search" class="form-control col-md-8 compact" style="width:60%">
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-6 form-group compact">
+            <div class="row compact">
+                <label class="control-label col-md-2 col-sm-2 col-xs-6 compact">{{config.getlabel('lbl_audit_date')}}</label>
+                <div class="input-group date col-md-10 col-sm-4 col-xs-6 compact" style="float:left">
+                    <date-picker [date]="dateDebutFilter" (dateChange)="dateDebutFilter = $event"></date-picker>
+                </div>
+            </div>
+            <div class="row compact">
+                <label class="control-label col-md-2 col-sm-2 col-xs-1 compact">{{config.getlabel('lbl_audit_date_A')}}</label>
+                <div class="input-group date col-md-10 col-sm-4 col-xs-6 compact">
+                    <date-picker [date]="dateFinFilter" (dateChange)="dateFinFilter = $event"></date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-6 col-xs-12">
+            <button class="btn btn-default">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div style="clear:both">
+            {{config.getlabel('lbl_resultat_recherche_count')}} : 50
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered" style="overflow:auto;display:inline-block; width:100%; min-height:100px; max-height:65vh">
+            <colgroup>
+                <col style="width:10px">
+                <col style="width:20%">
+                <col style="width:15%">
+                <col style="width:15%">
+                <col style="width:50%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="text-center"> <input type="checkbox" name="all" /></th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Element modifie</th>
+                    <th>Modification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 16:20</td>
+                    <td>Article</td>
+                    <td>33453</td>
+                    <td>Changement de nombre de pages de 266 a 280.</td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" />
+                    </td>
+                    <td>10/03/2017 a 10:30</td>
+                    <td>Tirage</td>
+                    <td>33422</td>
+                    <td>Le tirage () a change de quantite de 1500 a 2000.</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <div class="dropup" style="float: right;margin-top: -10px">
+            <button class="btn btn-success dropdown-toggle" type="button"
+                    id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" style="min-width:100px">
+                <li><a class="btn btn-outline-success">Acquitter</a></li>
+                <li><a class="btn btn-outline-success">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+

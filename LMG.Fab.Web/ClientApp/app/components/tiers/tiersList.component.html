@@ -1,0 +1,482 @@
+
+<div>
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+            <li [ngClass]="searchTabClass">
+                <a href="#search" data-toggle="pill">
+                    {{config.getlabel('lbl_tab_search')}}
+                </a>
+            </li>
+            <li [ngClass]="editTabClass">
+                <a data-toggle="pill" href="#selectedTiers" style="padding-right:2px">
+                    Detail tiers
+                    <button class="close closeTab" (click)="closeEditTab(true)">x</button>
+                </a>
+            </li>
+        </ul>
+        <div class="lotListNav" *ngIf="selectedTiers.PkTiers">
+            <button type="button" class="btn btn-outline-light" (click)="previousLot()">
+                <span><i class="fa fa-chevron-left"></i></span>
+            </button>
+            <button type="button" class="btn btn-outline-light" (click)="nextLot()">
+                <span><i class="fa fa-chevron-right"></i></span>
+            </button>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div id="search" class="tab-pane fade in active">
+            <div class="x_panel">
+                <button class="btn btn-default" (click)="staticModal.show()"
+                        style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px;  background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                    <i class="fa fa-clock-o"></i>
+                </button>
+                <div class="form-horizontal col-md-11 col-sm-11 col-xs-11 compact well">
+                    <div>
+                        <div class="col-md-4 col-sm-6 col-xs-8 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">
+                                    Nom
+                                </label>
+                                <input type="search" class="form-control col-md-8 compact" [(ngModel)]="nomFilter" style="width:60%">
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Adresse</label>
+                                <input type="search" class="form-control col-md-8 compact" [(ngModel)]="adresseFilter" style="width:60%">
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Telephone</label>
+                                <input type="search" class="form-control col-md-8 compact"  style="width:60%">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-4 col-xs-12 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Type tiers</label>
+                                <select class="form-control col-md-8 compact" [(ngModel)]="typeTiersFilter" style="width:60%">
+                                    <option value="0">- Tous -</option>
+                                    <option *ngFor="let c of typeTiersList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                                </select>
+                            </div>
+
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Type prestation</label>
+                                <select class="form-control col-md-8 compact" [(ngModel)]="typePrestationFilter" style="width:60%">
+                                    <option value="0">- Tous -</option>
+                                    <option *ngFor="let c of typePrestationList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                                </select>
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Code postal</label>
+                                <input type="search" class="form-control col-md-8 compact" style="width:60%">
+                            </div>
+
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                            <button class="btn btn-default" (click)="searchTiers()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="clear:both">
+                        {{config.getlabel('lbl_resultat_recherche_count')}} : {{tiersList.length}}
+                    </div>
+                </div>
+                <div class="col-md-1 compact">
+                    <button class="btn btn-default searchBtn" (click)="addTiers()" style="margin-top:10px">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </div>
+                <div>
+                    <div class="results">
+                        <table class="table table-striped table-bordered" style="height:73vh;overflow:auto;display:inline-block; width:96%; margin-bottom:2px">
+                            <colgroup>
+                                <col style="width:15%">
+                                <col style="width:20%">
+                                <col style="width:15%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:20%">
+                                <col style="width:100px">
+
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th [class.active]="order === 'FkParamDetailType'" (click)="setOrder('FkParamDetailType')">
+                                        Type tiers
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Nom'" (click)="setOrder('Nom')">
+                                        Nom
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Ville'" (click)="setOrder('Ville')">
+                                        Ville
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Telephone'" (click)="setOrder('Telephone')">
+                                        Telephone
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Actif'" (click)="setOrder('Actif')">
+                                        Actif
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th> Prestations </th>
+                                    <th style="text-align: -webkit-center; width:100px">{{config.getlabel('lbl_lot_Action_column')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let tiers of tiersList | orderBy:'Nom': order:reverse">
+                                    <td> {{getTiersType(tiers.FkParamDetailType)}}  </td>
+                                    <td> {{tiers.Nom}}  </td>
+                                    <td> {{tiers.Ville}}  </td>
+                                    <td> {{tiers.Telephone}}  </td>
+                                    <td style="text-align: center;">
+                                        <span *ngIf="tiers.Actif"><i class="fa fa-check-square-o"></i></span>
+                                        <span *ngIf="!tiers.Actif"><i class="fa fa-square-o"></i></span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <li *ngFor="let pres of tiers.Prestation">
+                                                -  {{getPrestationType(pres.FkParamDetailTrfo)}}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td style="text-align: -webkit-center; width:100px">
+                                        <button (click)="selectTiers(tiers, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_showbtn')"
+                                                style="height:20px !important">
+                                            <span class="icon-stack">
+                                                <i class="fa fa-square-o icon-stack-big"></i>
+                                                <i class="fa fa-eye icon-stack-small"></i>
+                                            </span>
+                                        </button>
+                                        <button (click)="selectTiers(tiers, true)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_editbtn')"
+                                                style="height:20px !important">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_editbtn')"
+                                                style="height:20px !important">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div style="position:absolute; bottom: 10px">
+                <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+                     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <audit-list selectedTable="tiers"></audit-list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selectedTiers" class="tab-pane fade in active" *ngIf="showEditTab">
+            <div class="x_panel" style="height:auto" (click)="expandRow(-1)">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h3 style="margin:2px">Informations du tiers</h3>
+                            <!--<ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>-->
+                        </div>
+                        <div class="x_content">
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Nom :
+                                        <span class="red">*</span>
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Nom" class="form-control" [readonly]="!editMode" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Type tiers :
+                                        <span class="red">*</span>
+                                    </label>
+                                    <select [disabled]="!editMode" class="form-control" [(ngModel)]="selectedTiers.FkParamDetailType" style="width:50%">
+                                        <option *ngFor="let c of typeTiersList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="clear:both">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Code Fournisseur Erp :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.CodeFournisseurErp" class="form-control" [readonly]="!editMode" style="width:50%">
+                                </div>
+                                <div class="form-group" style="clear:both">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Code Entrepot Erp :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.CodeEntrepotErp" class="form-control" [readonly]="!editMode" style="width:50%">
+                                </div>
+                                <div class="form-group" style="clear:both">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Texte Commande:
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.TexteCommande" class="form-control" [readonly]="!editMode" style="width:50%">
+                                </div>
+                                <div class="form-group" style="clear:both">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Signature Fiche Technique:
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.SignatureFicheTechnique" class="form-control" [readonly]="!editMode" style="width:50%">
+                                </div>
+                                <div class="form-group" style="clear:both">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Actif
+                                    </label>
+                                    <input type="checkbox" [(ngModel)]="selectedTiers.Actif" class="form-control compactControl" [readonly]="!editMode">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                        Imprim Vert
+                                    </label>
+                                    <input type="checkbox" [(ngModel)]="selectedTiers.OkImprimvert" class="form-control compactControl" [readonly]="!editMode">
+                                </div>
+
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Adresse1 :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Adresse1" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Adresse2 :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Adresse2" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Code Postale :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.CodePostal" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Ville :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Ville" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Pays :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Pays" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Nom Contact :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.NomContact" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Telephone :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.Telephone" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                        Adresse Email :
+                                    </label>
+                                    <input type="text" [(ngModel)]="selectedTiers.AdresseEmail" class="form-control" [readonly]="!editMode" style="width:60%">
+                                </div>
+
+                            </div>
+
+                        </div>
+  
+                        <div class="clearfix"></div>
+
+                        <div class="x_title row" style="padding-bottom:3px; margin-bottom:2px">
+                            <h3 style="margin:2px; display:inline; float:left">
+                                Prestations du tiers
+                                <button *ngIf="editMode" class="btn btn-default searchBtn" (click)="showAddPresta = true"
+                                        style="margin-left:10px; padding:4px 8px; font-size:10px; margin-top:-3px">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </h3>
+                            <div style="padding-left:20px; display:inline; float:left; margin-top:4px">
+                                <h4 *ngIf="showAddPresta && editMode" style="padding-left:20px; display:inline"> Nouvelle prestation : </h4>
+                                <select *ngIf="showAddPresta && editMode" class="form-control col-md-8 compact" [(ngModel)]="prestationToAdd" style="width:250px; float:none; display:inline">
+                                    <option *ngFor="let c of typePrestationList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                                </select>
+                                <button *ngIf="showAddPresta && prestationToAdd > 0 && editMode" class="btn btn-link searchBtn" (click)="addPresta()"
+                                        style="margin-left:10px; padding:4px 8px; font-size:10px; margin-top:0px; margin-bottom:1px">
+                                    Ajouter la prestation
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="x_content">
+                            <ul class="list-unstyled">
+                                <li *ngFor="let pres of selectedTiers.Prestation ; let $index=index;">
+                                    <span class="fa fa-arrow-right" style="float:left; padding-right:5px; padding-top:3px"></span>
+                                    <span style="float:left;font-size: 15px; padding-left:2px; font-weight:bold; padding-bottom:2px">
+                                        {{getPrestationType(pres.FkParamDetailTrfo)}}
+                                    </span>
+                                    <span>
+                                        <button *ngIf="editMode" (click)="deletePresta($index)" type="button" class="btn btn-link" style="margin-top:-12px; height:20px" [tooltip]="config.getlabel('lbl_deleteBtn')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
+
+                                    <div class="x_panel" style="padding-top:3px; margin-left:10px">
+                                        <div class="x_content" style="padding-bottom:2px">
+                                            <div>
+                                                <div class="row compact">
+                                                    <label class="control-label" style="float:left; padding-right:5px">
+                                                        Taux horaire :
+                                                    </label>
+                                                    <input type="search" class="form-control compact" [(ngModel)]="pres.TauxHoraire" style="width:100px; float:left">
+                                                </div>
+                                            </div>
+                                            <div *ngIf="showMachine(pres)">
+                                                <h4 style="margin:2px; font-size: 14px;">
+                                                    Machines :
+                                                    <button *ngIf="editMode" class="btn btn-default searchBtn" (click)="addMachine(pres)"
+                                                            style="margin-left:10px; padding:4px 8px; font-size:10px; margin-bottom:2px; margin-top:2px">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </h4>
+                                                <table style="width:100%" class="table table-striped table-bordered">
+                                                    <colgroup>
+                                                        <col style="width:20%">
+                                                        <col style="width:10%">
+                                                        <col style="width:10%">
+                                                        <col style="width:10%">
+                                                        <col style="width:10%">
+                                                        <col style="width:10%">
+                                                        <col style="width:10%">
+                                                        <col style="width:20%">
+                                                        <col style="width:70px">
+
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nom</th>
+                                                            <th>Tournee</th>
+                                                            <th>Roto</th>
+                                                            <th>Coming</th>
+                                                            <th>Cameron</th>
+                                                            <th>Ok Numerique</th>
+                                                            <th>Fausse Coupe</th>
+                                                            <th>Sous Multiples Cahiers</th>
+                                                            <th style="text-align: -webkit-center; width:80px">{{config.getlabel('lbl_lot_Action_column')}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let machine of pres.Machine ; let $index_machine=index;" (click)="expandRow($index_machine, $index)">
+                                                            <td>
+                                                                <div *ngIf="$index_machine !== expandedIndex || $index !== expandedPrestaIndex">{{machine.Nom}}</div>
+                                                                <div *ngIf="$index_machine === expandedIndex && $index === expandedPrestaIndex">
+                                                                    <input type="text" autofocus [(ngModel)]="machine.Nom" style="max-width:100%" class="form-control compactControl">
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div *ngIf="$index_machine !== expandedIndex || $index !== expandedPrestaIndex">{{machine.Tournees}}</div>
+                                                                <div *ngIf="$index_machine === expandedIndex && $index === expandedPrestaIndex">
+                                                                    <input type="text" autofocus [(ngModel)]="machine.Tournees" style="max-width:100px" class="form-control compactControl">
+                                                                </div>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <input type="checkbox" [(ngModel)]="machine.Roto" class="compactControl" [disabled]="($index_machine !== expandedIndex || $index !== expandedPrestaIndex)">
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <input type="checkbox" [(ngModel)]="machine.Coming" class="compactControl" [disabled]="($index_machine !== expandedIndex || $index !== expandedPrestaIndex)">
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <input type="checkbox" [(ngModel)]="machine.Cameron" class="compactControl" [disabled]="($index_machine !== expandedIndex || $index !== expandedPrestaIndex)">
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <input type="checkbox" [(ngModel)]="machine.OkNumerique" class="compactControl" [disabled]="($index_machine !== expandedIndex || $index !== expandedPrestaIndex)">
+                                                            </td>
+                                                            <td>
+                                                                <div *ngIf="$index_machine !== expandedIndex || $index !== expandedPrestaIndex">{{machine.FausseCoupe}}</div>
+                                                                <div *ngIf="$index_machine === expandedIndex && $index === expandedPrestaIndex">
+                                                                    <input type="text" autofocus [(ngModel)]="machine.FausseCoupe" style="max-width:100px" class="form-control compactControl">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div *ngIf="$index_machine !== expandedIndex || $index !== expandedPrestaIndex">{{machine.SousMultiplesCahiers}}</div>
+                                                                <div *ngIf="$index_machine === expandedIndex && $index === expandedPrestaIndex">
+                                                                    <input type="text" autofocus [(ngModel)]="machine.SousMultiplesCahiers" style="max-width:100px" class="form-control compactControl">
+                                                                </div>
+                                                            </td>
+                                                            <td style="text-align: -webkit-center; width:60px">
+                                                                <button (click)="deleteMachine(pres, $index_machine)" type="button" class="btn btn-link compactBtn" *ngIf="editMode" style="height:20px !important"
+                                                                        [tooltip]="config.getlabel('lbl_lot_editbtn')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                  
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                  </div>
+
+                </div>
+
+
+
+                <div style="margin-top:5px">
+                    <div style="margin-right:10px; margin-top:5px; float:right" *ngIf="editMode">
+                        <button type="button" class="btn btn-primary" *ngIf="selectedTiers?.PkTiers > 0"
+                                (click)="cancelEditTiers()">
+                            {{config.getlabel('lbl_lot_cancelbtn')}}
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                                (click)="saveTiers()">
+                            {{config.getlabel('lbl_saveBtn')}}
+                        </button>
+                    </div>
+                    <div style="margin-right:10px; margin-top:5px; float:right" *ngIf="!editMode">
+                        <button type="button" class="btn btn-primary" (click)="editTiers()">
+                            {{config.getlabel('lbl_lot_editbtn')}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng2-toasty [position]="'top-right'">
+</ng2-toasty>
+

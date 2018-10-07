@@ -1,0 +1,307 @@
+
+<div>
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+            <li [ngClass]="listParamTabClass">
+                <a href="#listParam" data-toggle="pill">
+                    Collections techniques
+                </a>
+            </li>
+            <li [ngClass]="editTabClass">
+                <a data-toggle="pill" href="#selectParamDiv" style="padding-right:2px">
+                    Modification de la collection : <strong>{{selectedParam.Code}}</strong>
+                    <button class="close closeTab" (click)="closeEditTab(true)">x</button>
+                </a>
+            </li>
+        </ul>
+        <div class="lotListNav" *ngIf="selectedParam.PkCollectionTechnique">
+            <button type="button" class="btn btn-outline-light" (click)="previousLot()">
+                <span><i class="fa fa-chevron-left"></i></span>
+            </button>
+            <button type="button" class="btn btn-outline-light" (click)="nextLot()">
+                <span><i class="fa fa-chevron-right"></i></span>
+            </button>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div id="listParam" [ngClass]="listParamContentClass" class="tab-pane fade">
+            <div class="x_panel">
+                <button class="btn btn-default" (click)="auditModal.show()"
+                        style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px;  background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                    <i class="fa fa-clock-o"></i>
+                </button>
+                <div class="form-horizontal col-md-10 col-sm-11 col-xs-11 compact well ">
+                    <div>
+                        <label class="control-label left">
+                            Filtrer :
+                        </label>
+                        <input type="search" class="form-control left"
+                               [(ngModel)]="searchText" style="width:200px; margin-left:10px; margin-right:10px">
+                    </div>
+                </div>
+                <div class="col-md-1 compact">
+                    <button class="btn btn-default searchBtn" (click)="addParam()" style="margin-top:10px; margin-left:10px">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </div>
+                <div>
+                    <div class="results">
+                        <table class="table table-striped table-bordered"
+                               style="height:78vh;overflow:auto;display:inline-block; width:96%; margin-bottom:2px">
+                            <colgroup>
+                                <col style="width:12%">
+                                <col style="width:35%">
+                                <col style="width:10%">
+                                <col style="width:15%">
+                                <col style="width:18%">
+                                <col style="width:10%">
+                                <col style="width:100px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th [class.active]="order === 'Code'" (click)="setOrder('Code')">
+                                        {{config.getlabel('lbl_audit_paramtable_Code')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Nom'" (click)="setOrder('Nom')">
+                                        Nom
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Tri'" (click)="setOrder('Tri')">
+                                        Tri
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'NbJustificatifs'" (click)="setOrder('NbJustificatifs')">
+                                        Nb Justificatifs
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'TexteJustificatif'" (click)="setOrder('TexteJustificatif')">
+                                        Texte Justificatif
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'OkActif'" (click)="setOrder('OkActif')">
+                                        Actif
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th>{{config.getlabel('lbl_lot_Action_column')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let param of paramList | orderBy:'PkParamTable': order:reverse | filter:searchText">
+                                    <td> {{param.Code}}  </td>
+                                    <td> {{param.Nom}}  </td>
+                                    <td> {{param.Tri}}  </td>
+                                    <td> {{param.NbJustificatifs}}  </td>
+                                    <td> {{param.TexteJustificatif}}  </td>
+                                    <td style="text-align: center">
+                                        <span *ngIf="param.OkActif"><i class="fa fa-check-square-o"></i></span>
+                                        <span *ngIf="!param.OkActif"><i class="fa fa-square-o"></i></span>
+                                    </td>
+                                    <td style="text-align: -webkit-center; min-width:100px">
+                                        <button (click)="selectParam(param, true)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_showbtn')"
+                                                style="height:20px !important">
+                                            <span class="icon-stack">
+                                                <i class="fa fa-square-o icon-stack-big"></i>
+                                                <i class="fa fa-eye icon-stack-small"></i>
+                                            </span>
+                                        </button>
+                                        <button (click)="selectParam(param, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_editbtn')"
+                                                style="height:20px !important">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button (click)="deleteParam(param, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_deleteBtn')"
+                                                style="height:20px !important">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selectParamDiv" [ngClass]="editContentClass" class="tab-pane fade">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_paramtable_Code')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <input type="text" [(ngModel)]="selectedParam.Code"
+                                   class="form-control compactControl col-md-6 col-sm-7 col-xs-12" [readonly]="isReadonly" required maxlength="12" minlength="1">
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Nom :
+                                <span class="red">*</span>
+                            </label>
+                            <input type="text" [(ngModel)]="selectedParam.Nom" class="form-control compactControl col-md-6 col-sm-7 col-xs-12" required
+                                   [readonly]="isReadonly">
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Tri :
+                            </label>
+                            <input name="LibelleCourt" id="LibelleCourt" type="text" [(ngModel)]="selectedParam.Tri"
+                                   class="form-control compactControl col-md-9 col-sm-8 col-xs-12"
+                                   #LibelleCourt="ngModel" [readonly]="isReadonly">
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Nb Justificatifs :
+                            </label>
+                            <input type="text" [(ngModel)]="selectedParam.NbJustificatifs"
+                                   class="form-control compactControl col-md-9 col-sm-8 col-xs-12" [readonly]="isReadonly">
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Texte Justificatif :
+                            </label>
+                            <input type="text" [(ngModel)]="selectedParam.TexteJustificatif"
+                                   class="form-control compactControl col-md-9 col-sm-8 col-xs-12" [readonly]="isReadonly">
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Actif :
+                            </label>
+                            <input type="checkbox" [(ngModel)]="selectedParam.OkActif"
+                                   class="form-control compactControl col-md-9 col-sm-8 col-xs-12" [readonly]="isReadonly">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type Gamme :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailGamm" style="width:50%">
+                                <option *ngFor="let c of paramGamm" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type pellicule Couv :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailPellCouv" style="width:50%">
+                                <option *ngFor="let c of paramPell" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type vernissage Couv :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailVernCouv" style="width:50%">
+                                <option *ngFor="let c of paramVern" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type pellicule Couv rabat :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailPellCouvr" style="width:50%">
+                                <option *ngFor="let c of paramPell" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type vernissage Couv rabat :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailVernCouvr" style="width:50%">
+                                <option *ngFor="let c of paramVern" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type pellicule jaquette :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailPellJaquette" style="width:50%">
+                                <option *ngFor="let c of paramPell" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Type vernissage jaquette :
+                            </label>
+                            <select [disabled]="isReadonly" class="form-control" [(ngModel)]="selectedParam.FkParamDetailVernJaquette" style="width:50%">
+                                <option *ngFor="let c of paramVern" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div style="margin-top:10px">
+                        <div style="margin-right:10px; float:right" *ngIf="!isReadonly">
+                            <button type="button" class="btn btn-primary" *ngIf="selectedParam?.PkCollectionTechnique > 0"
+                                    (click)="cancelEditParam()">
+                                {{config.getlabel('lbl_lot_cancelbtn')}}
+                            </button>
+                            <button type="submit" class="btn btn-success"
+                                    (click)="saveParam(false)">
+                                {{config.getlabel('lbl_saveBtn')}}
+                            </button>
+                        </div>
+                        <div style="margin-right:10px; float:right" *ngIf="isReadonly">
+                            <button type="button" class="btn btn-primary" (click)="editParam()">
+                                {{config.getlabel('lbl_lot_editbtn')}}
+                            </button>
+                        </div>
+                    </div>
+      
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--modal audit-->
+    <div style="position:absolute; bottom: 10px">
+        <div class="modal fade" bsModal #auditModal="bs-modal" [config]="{backdrop: 'static'}"
+             tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="auditModal.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <audit-list selectedTable="collectionTechnique"></audit-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal confirmation delete et changement du code-->
+    <div class="modal fade" bsModal id="confirmEditModal" #confirmEditModal="bs-modal" style="top:200px" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding:10px; width:600px; margin-left:100px;display: inline-block">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">{{modalHeader}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div>{{modalBody}}</div>
+                    <div style="float:right; margin-top:20px">
+                        <button (click)="confirmEditModal.hide()" id="hideModalBtn" type="button" class="btn btn-primary">Annuler</button>
+                        <button (click)="confirmModal(modalType)" type="button" class="btn btn-primary">Confirmer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng2-toasty [position]="'top-right'">
+</ng2-toasty>
+
+

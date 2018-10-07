@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [lmg_fab]
+    WITH PASSWORD = N'yxdn,hkdcnpli|LjOz?pidjdmsFT7_&#$!~<{lH9vutgTbCs', SID = 0xBDA26CA5D250D7469767F06F48261683, DEFAULT_LANGUAGE = [Français], CHECK_POLICY = OFF;
+

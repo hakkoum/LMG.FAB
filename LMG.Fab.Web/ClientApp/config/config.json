@@ -1,0 +1,9 @@
+{
+  "environment": "Development",
+  "appCode": "FABRIC",
+  "version": "20180207.1",
+  "AppSettings": {
+    "LockRefreshDelay": 80,
+    "LockExpireDuration": 300
+  }
+}

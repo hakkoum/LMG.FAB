@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.Fab.Data", "LMG.Fab.Data\LMG.Fab.Data.csproj", "{33019D80-6C4F-430E-95E6-5070EE5957A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.Fab.Web", "LMG.Fab.Web\LMG.Fab.Web.csproj", "{D13213D8-DEFE-4581-A1F7-8D4B04F3C3F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.FAB.Services", "LMG.FAB.Services\LMG.FAB.Services.csproj", "{60214037-4AD2-456F-8A34-CD7875AB1E9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.FAB.Util", "LMG.FAB.Util\LMG.FAB.Util.csproj", "{2936400B-2D54-4A81-BB83-66277B06801C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.FAB.Ref.Synchro", "LMG.FAB.Ref.Synchro\LMG.FAB.Ref.Synchro.csproj", "{61D59477-7875-4839-9974-336782A87BAB}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LMG.FAB.Database", "LMG.FAB.Database\LMG.FAB.Database.sqlproj", "{7CEFF3A2-4CAC-4313-836C-199CB09CB812}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMG.FAB.Tests", "LMG.FAB.Tests\LMG.FAB.Tests.csproj", "{FA3A897E-BA35-483E-9AE6-0051A64EFCAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33019D80-6C4F-430E-95E6-5070EE5957A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33019D80-6C4F-430E-95E6-5070EE5957A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33019D80-6C4F-430E-95E6-5070EE5957A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33019D80-6C4F-430E-95E6-5070EE5957A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D13213D8-DEFE-4581-A1F7-8D4B04F3C3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D13213D8-DEFE-4581-A1F7-8D4B04F3C3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D13213D8-DEFE-4581-A1F7-8D4B04F3C3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D13213D8-DEFE-4581-A1F7-8D4B04F3C3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60214037-4AD2-456F-8A34-CD7875AB1E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60214037-4AD2-456F-8A34-CD7875AB1E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60214037-4AD2-456F-8A34-CD7875AB1E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60214037-4AD2-456F-8A34-CD7875AB1E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2936400B-2D54-4A81-BB83-66277B06801C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2936400B-2D54-4A81-BB83-66277B06801C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2936400B-2D54-4A81-BB83-66277B06801C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2936400B-2D54-4A81-BB83-66277B06801C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D59477-7875-4839-9974-336782A87BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D59477-7875-4839-9974-336782A87BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D59477-7875-4839-9974-336782A87BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D59477-7875-4839-9974-336782A87BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CEFF3A2-4CAC-4313-836C-199CB09CB812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CEFF3A2-4CAC-4313-836C-199CB09CB812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CEFF3A2-4CAC-4313-836C-199CB09CB812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CEFF3A2-4CAC-4313-836C-199CB09CB812}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FA3A897E-BA35-483E-9AE6-0051A64EFCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3A897E-BA35-483E-9AE6-0051A64EFCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3A897E-BA35-483E-9AE6-0051A64EFCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3A897E-BA35-483E-9AE6-0051A64EFCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D372350-ABBF-40A1-A844-1DFC719B8BAC}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://lamartiniere.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = LMG.Fab.Data\\LMG.Fab.Data.csproj
+		SccProjectName1 = LMG.Fab.Data
+		SccLocalPath1 = LMG.Fab.Data
+		SccProjectUniqueName2 = LMG.Fab.Web\\LMG.Fab.Web.csproj
+		SccProjectName2 = LMG.Fab.Web
+		SccLocalPath2 = LMG.Fab.Web
+		SccProjectUniqueName3 = LMG.FAB.Services\\LMG.FAB.Services.csproj
+		SccProjectName3 = LMG.FAB.Services
+		SccLocalPath3 = LMG.FAB.Services
+		SccProjectUniqueName4 = LMG.FAB.Util\\LMG.FAB.Util.csproj
+		SccProjectName4 = LMG.FAB.Util
+		SccLocalPath4 = LMG.FAB.Util
+		SccProjectUniqueName5 = LMG.FAB.Ref.Synchro\\LMG.FAB.Ref.Synchro.csproj
+		SccProjectName5 = LMG.FAB.Ref.Synchro
+		SccLocalPath5 = LMG.FAB.Ref.Synchro
+		SccProjectUniqueName6 = LMG.FAB.Database\\LMG.FAB.Database.sqlproj
+		SccProjectName6 = LMG.FAB.Database
+		SccLocalPath6 = LMG.FAB.Database
+		SccProjectUniqueName7 = LMG.FAB.Tests\\LMG.FAB.Tests.csproj
+		SccProjectName7 = LMG.FAB.Tests
+		SccLocalPath7 = LMG.FAB.Tests
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+.prod {
+    background-color: #EDEDED;
+}
+
+.rec {
+    background-color: #FFEFB7;
+}
+
+.dev {
+    background-color: #CAF0B7;
+}
+
+
+.top_nav .navbar-right {
+    width: 60% !important;
+}

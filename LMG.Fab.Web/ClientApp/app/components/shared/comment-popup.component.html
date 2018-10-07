@@ -1,0 +1,39 @@
+
+<div class="">
+    <button *ngIf="comment?.CommentaireHtml && comment?.IsImportant"  [tooltip]="myTooltip"  [popover]="myPopover"
+            class="btn btn-link compactBtn btnComment btnComment-red" type="button">
+        <i class="fa fa-commenting-o"></i>
+    </button>
+    <button *ngIf="comment?.CommentaireHtml && !comment?.IsImportant" [tooltip]="myTooltip"  [popover]="myPopover"
+            class="btn btn-link compactBtn btnComment btnComment-green" type="button">
+        <i class="fa fa-commenting-o"></i>
+    </button>
+    <button *ngIf="!comment?.CommentaireHtml && showComment && canEdit" [popover]="myPopover" [hidden]="!canEdit"
+            class="btn btn-link compactBtn btnComment" type="button">
+        <i class="fa fa-commenting-o"></i>
+    </button>
+    <popover-content #myPopover placement="right" [closeOnClickOutside]="true" [hidden]="!canEdit">
+        <div>
+            <div style="padding:5px;">
+                {{config.getlabel('lbl_commentaire_AddComment')}} :
+                <div style="float:right">
+                    {{config.getlabel('lbl_audit_commentaire_IsImportant')}} : <input #checkImportant type="checkbox" [ngModel]="isImportant" (ngModelChange)="isImportant = $event" />
+                    <span *ngIf="checkImportant.checked"><i class="fa fa-flag" style="color:red"></i></span>
+                    <span *ngIf="!checkImportant.checked"><i class="fa fa-flag" style="color:green"></i></span>
+                </div>
+            </div>
+            <ckeditor [ngModel]="commentHtml" (ngModelChange)="commentHtml=$event"
+                      debounce="500" name="ckEditor" #ckEditor="ngModel"
+                      [config]="{customConfig:'/dist/assets/ckeditor-config.js'}">
+            </ckeditor>
+            <div style="float:right; margin-top:10px;">
+                <button (click)="editComment(myPopover, '')">{{config.getlabel('lbl_deleteBtn')}}</button>
+                <button (click)="editComment(myPopover, commentHtml)">{{config.getlabel('lbl_saveBtn')}}</button>
+                <button (click)="cancelEdit(myPopover)">{{config.getlabel('lbl_cancelbtn')}}</button>
+            </div>
+        </div>
+    </popover-content>
+    <tooltip-content #myTooltip [animation]="true" placement="left">
+        <div *ngIf="comment?.CommentaireHtml" [innerHTML]="comment?.CommentaireHtml | safeHtml"></div>
+    </tooltip-content>
+</div>

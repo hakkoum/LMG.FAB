@@ -1,0 +1,10 @@
+
+.footerNav {
+    bottom: 1px;
+    clear: both;
+    display: block;
+    padding: 5px 0 0 0;
+    position: absolute;
+    z-index: 999;
+    margin-bottom: 5px;
+}

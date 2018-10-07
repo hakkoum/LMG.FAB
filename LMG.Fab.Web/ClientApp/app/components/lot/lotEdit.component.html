@@ -1,0 +1,177 @@
+﻿
+<div>
+    <h4 *ngIf="selectedLot?.PkLot > 0">
+        {{config.getlabel('lbl_lot_visualiser_title')}} : {{selectedLot?.NomLot}}
+        <button class="btn btn-default" (click)="staticModal.show()"
+             style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -20px;  background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+            <i class="fa fa-clock-o"></i>
+        </button>
+
+    </h4>
+    <h4 *ngIf="!selectedLot?.PkLot">
+        {{config.getlabel('lbl_lot_create_title')}}
+    </h4>
+    <div class="toast_container">
+        <div *ngIf="showError && (!lotForm.form.valid || selectedLot.DateArriveeLivres == null)" class="alert alert-danger toast">
+            <button class="close closeTab" (click)="showError = false"
+                    style="margin-top:-10px;margin-right:-5px">
+                x
+            </button>
+            <div>
+                <ul>
+                    <li *ngIf="CodeLot.invalid">
+                        {{config.getlabel('lbl_lot_codeLot_validation')}}
+                    </li>
+                    <li *ngIf="NomLot.invalid">
+                        {{config.getlabel('lbl_lot_nomLot_validation')}}
+                    </li>
+                    <li *ngIf="NomProcessus.invalid">
+                        {{config.getlabel('lbl_lot_processus_validation')}}
+                    </li>
+                    <li *ngIf="selectedLot.DateArriveeLivres == null">
+                        {{config.getlabel('lbl_lot_dateArrivee_validation')}}
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div *ngIf="isLocked" class="alert alert-warning toast">
+            {{config.getlabel('lbl_lot_record_locked') | StringFormat : [tableLock?.UserName]}}
+        </div>
+    </div>
+
+    <div class="form-horizontal form-label-left input_mask">
+        <div class="col-md-6 col-xs-12">
+            <form #lotForm="ngForm">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_CodeLot')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group" (mouseover)='showCommentCodeLot = true' (mouseleave)='showCommentCodeLot = false'>
+                                <input name="CodeLot" id="CodeLot" type="text" [(ngModel)]="selectedLot.CodeLot"
+                                       class="form-control compactControl"
+                                       #CodeLot="ngModel" [readonly]="_isReadonly" required maxlength="20" minlength="5">
+                                <comment-popup [showComment]="showCommentCodeLot && !_isReadonly" [comment]="getComment('CodeLot')" fieldName="CodeLot" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_libelle')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group" (mouseover)='showCommentNomLot = true' (mouseleave)='showCommentNomLot = false'>
+                                <input name="NomLot" type="text" [(ngModel)]="selectedLot.NomLot" class="form-control compactControl"
+                                       #NomLot="ngModel" [readonly]="_isReadonly" required>
+                                <comment-popup [showComment]="showCommentNomLot && !_isReadonly" [comment]="getComment('NomLot')" fieldName="NomLot" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                        <div class="form-group" (mouseover)='showCommentProcessus = true' (mouseleave)='showCommentProcessus = false'>
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_FkParamDetailProc')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <select name="NomProcessus" [disabled]="_isReadonly" class="form-control compactControl"
+                                        [(ngModel)]="selectedLot.FkParamDetailProc" required #NomProcessus="ngModel">
+                                    <option *ngFor="let c of processusList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                                </select>
+                                <comment-popup [showComment]="showCommentProcessus && !_isReadonly" [comment]="getComment('FkParamDetailProc')" fieldName="FkParamDetailProc" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_EnCours')}} :
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group" (mouseover)='showCommentEnCours = true' (mouseleave)='showCommentEnCours = false'>
+                                <input name="EnCours" type="checkbox" [(ngModel)]="selectedLot.EnCours" class="form-control compactControl" 
+                                       #EnCours="ngModel" [readonly]="_isReadonly">
+                                <comment-popup [showComment]="showCommentEnCours && !_isReadonly" [comment]="getComment('EnCours')" fieldName="EnCours" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                        <div class="form-group" (mouseover)='showDateArriveeLivres = true' (mouseleave)='showDateArriveeLivres = false'>
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_DateArriveeLivres')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <date-picker [date]="selectedLot.DateArriveeLivres" (dateChange)="selectedLot.DateArriveeLivres = $event"
+                                             [readonly]="_isReadonly"></date-picker>
+                                <comment-popup [showComment]="showDateArriveeLivres && !_isReadonly" [comment]="getComment('DateArriveeLivres')" fieldName="DateArriveeLivres" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                        <div class="form-group" (mouseover)='showDateMiseEnVente = true' (mouseleave)='showDateMiseEnVente = false'>
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_DateMiseEnVente')}} :
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <date-picker [date]="selectedLot.DateMiseEnVente" (dateChange)="selectedLot.DateMiseEnVente = $event"
+                                             [readonly]="_isReadonly"></date-picker>
+                                <comment-popup [showComment]="showDateMiseEnVente && !_isReadonly" [comment]="getComment('DateMiseEnVente')" fieldName="DateMiseEnVente" [canEdit]="selectedLot?.PkLot > 0 && !_isReadonly"
+                                               (commentChange)="changeComment($event)">
+                                </comment-popup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div style="margin-right:10px; float:right" *ngIf="!_isReadonly">
+                    <button type="button" class="btn btn-primary" *ngIf="selectedLot?.PkLot > 0"
+                            (click)="cancelEdit()">
+                        {{config.getlabel('lbl_lot_cancelbtn')}}
+                    </button>
+                    <button type="submit" class="btn btn-success"
+                            (click)="saveLotAndClose(lotForm)">
+                        {{config.getlabel('lbl_lot_saveAndClosebtn')}}
+                    </button>
+                    <button type="submit" class="btn btn-success"
+                            (click)="saveLotAndNew(lotForm)">
+                        {{config.getlabel('lbl_lot_saveAndNewbtn')}}
+                    </button>
+                </div>
+                <div style="margin-right:10px; float:right" *ngIf="_isReadonly">
+                    <button type="button" class="btn btn-primary" (click)="editLot()">
+                        {{config.getlabel('lbl_lot_editbtn')}}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+        <div style="position:absolute; bottom: 10px;">
+            <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+                 tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <audit-list selectedTable="lot" selectedKey="{{selectedLot?.PkLot}}"></audit-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng2-toasty [position]="'top-right'">
+</ng2-toasty>
+

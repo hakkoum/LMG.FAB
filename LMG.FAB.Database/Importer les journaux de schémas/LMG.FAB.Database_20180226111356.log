@@ -1,0 +1,71 @@
+26/02/2018 12:13:56	Ce journal contient des informations sur l'importation du schéma dans le projet 'LMG.FAB.Database' sur l'ordinateur 'DSI-DEV-02' par l'utilisateur 'prestadsi2'.
+26/02/2018 12:13:56	L'importation du schéma de base de données a commencé.
+26/02/2018 12:14:01	Collecte des options de la base de données
+26/02/2018 12:14:01	Collecte des utilisateurs
+26/02/2018 12:14:01	Collecte des rôles
+26/02/2018 12:14:01	Collecte des rôles d'application
+26/02/2018 12:14:01	Collecte des appartenances aux rôles
+26/02/2018 12:14:01	Collecte des groupes de fichiers
+26/02/2018 12:14:01	Collecte des catalogues de recherche en texte intégral
+26/02/2018 12:14:01	Collecte des assemblys
+26/02/2018 12:14:01	Collecte des certificats
+26/02/2018 12:14:01	Collecte des clés asymétriques
+26/02/2018 12:14:01	Collecte des clés symétriques
+26/02/2018 12:14:01	Collecte des clés symétriques chiffrées
+26/02/2018 12:14:01	Collecte des schémas
+26/02/2018 12:14:02	Collecte des collections de schémas XML
+26/02/2018 12:14:02	Collecte des types de données définis par l'utilisateur
+26/02/2018 12:14:02	Collecte des types définis par l'utilisateur
+26/02/2018 12:14:02	Collecte des types de tables
+26/02/2018 12:14:02	Collecte des clés uniques des types de tables
+26/02/2018 12:14:02	Collecte des clés primaires pour les types de tables
+26/02/2018 12:14:02	Collecte des contraintes de validation pour les types de tables
+26/02/2018 12:14:02	Collecte des contraintes par défaut pour les types de tables
+26/02/2018 12:14:02	Collecte des fonctions de partition
+26/02/2018 12:14:02	Collecte des schémas de partition
+26/02/2018 12:14:02	Collecte des fonctions
+26/02/2018 12:14:02	Collecte de fonctions cryptées
+26/02/2018 12:14:02	Collecte des agrégats
+26/02/2018 12:14:02	Collecte des procédures
+26/02/2018 12:14:02	Collecte de procédures cryptées
+26/02/2018 12:14:02	Collecte des tables
+26/02/2018 12:14:02	Collecte des clés primaires
+26/02/2018 12:14:02	Collecte des contraintes uniques
+26/02/2018 12:14:02	Collecte des clés étrangères
+26/02/2018 12:14:02	Collecte des contraintes par défaut
+26/02/2018 12:14:02	Collecte des contraintes de validation
+26/02/2018 12:14:02	Collecte des vues
+26/02/2018 12:14:02	Collecte de vues cryptées
+26/02/2018 12:14:02	Collecte des index
+26/02/2018 12:14:02	Collecte des statistiques
+26/02/2018 12:14:02	Collecte des listes de mots vides d'index de recherche en texte intégral
+26/02/2018 12:14:02	Collecte des index de recherche en texte intégral
+26/02/2018 12:14:02	Collecte des index spatiaux
+26/02/2018 12:14:02	Collecte des index XML
+26/02/2018 12:14:02	Collecte de déclencheurs cryptés
+26/02/2018 12:14:02	Collecte des déclencheurs
+26/02/2018 12:14:02	Collecte des déclencheurs chiffrés et DDL CLR
+26/02/2018 12:14:02	Collecte des DDL triggers
+26/02/2018 12:14:02	Collecte des synonymes
+26/02/2018 12:14:02	Collecte des valeurs par défaut
+26/02/2018 12:14:02	Collecte des liaisons UDDT de contrainte de données
+26/02/2018 12:14:02	Collecte des règles
+26/02/2018 12:14:02	Collecte des liaisons UDDT de contrainte de données
+26/02/2018 12:14:02	Collecte des types de messages
+26/02/2018 12:14:02	Collecte des files d'attente
+26/02/2018 12:14:02	Collecte des contrats
+26/02/2018 12:14:02	Collecte des services
+26/02/2018 12:14:02	Collecte des notifications d'événements
+26/02/2018 12:14:02	Collecte des liaisons de service distant
+26/02/2018 12:14:02	Collecte des priorités de Service Broker
+26/02/2018 12:14:02	Collecte des signatures
+26/02/2018 12:14:02	Collection des options de compression de données
+26/02/2018 12:14:02	Collection des propriétés étendues
+26/02/2018 12:14:02	Collecte des informations d'identification
+26/02/2018 12:14:02	Collecte des connexions
+26/02/2018 12:14:02	Collecte des audits du serveur
+26/02/2018 12:14:02	Analyse du projet à la recherche des éléments en double
+26/02/2018 12:14:02	Fin du traitement des éléments en double
+26/02/2018 12:14:03	Importation de la base de données terminée.
+26/02/2018 12:14:03	Un résumé de l'opération d'importation a été enregistré à l'emplacement suivant : C:\Sources\LMG.FAB\LMG.FAB\LMG.FAB.Database\Importer les journaux de schémas\LMG.FAB.Database_20180226111356.log.
+26/02/2018 12:14:03	Cliquez sur Terminer pour continuer...

@@ -1,0 +1,16 @@
+ul.bar_tabs > li {
+    margin-top: 0px;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #398439;
+    border-color: #255625;
+}
+
+.x_panel
+{
+    margin-bottom:1px;
+    padding-bottom:1px;
+}

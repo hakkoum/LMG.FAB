@@ -1,0 +1,13 @@
+.checkLabelLeft {
+    text-align: left !important;
+    padding-top: 2px !important;
+}
+
+.bs-datepicker-container {
+    padding: 2px !important;
+}
+
+
+.bs-calendar-container {
+    padding: 2px;
+}

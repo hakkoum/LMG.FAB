@@ -1,0 +1,314 @@
+
+<div>
+    <div class="toast_container">
+        <div *ngIf="showError && (existingCodeDetailError || errors.length > 0)" class="alert alert-danger toast">
+            <button class="close closeTab" (click)="showError = false" style="margin-top:-10px;margin-right:-5px"> x </button>
+            <div>
+                <ul>
+                    <li *ngIf="existingCodeDetailError">
+                        {{existingCodeDetailError}}
+                    </li>
+                    <li *ngFor="let error of errors">
+                        {{error}}
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+            <li [ngClass]="listParamTabClass">
+                <a href="#listParam" data-toggle="pill">
+                    Parametres
+                </a>
+            </li>
+            <li [ngClass]="editTabClass">
+                <a data-toggle="pill" href="#selectParamDiv" style="padding-right:2px">
+                    Modification du parametre : <strong>{{selectedParam.Code}}</strong>
+                    <button class="close closeTab" (click)="closeEditTab(true)">x</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="listParam" [ngClass]="listParamContentClass" class="tab-pane fade">
+            <div class="x_panel">
+                <button class="btn btn-default" (click)="auditModal.show()"
+                        style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px;  background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                    <i class="fa fa-clock-o"></i>
+                </button>
+                <div class="form-horizontal col-md-10 col-sm-11 col-xs-11 compact well ">
+                    <div>
+                        <label class="control-label left">
+                            Filtrer :
+                        </label>
+                        <input type="search" class="form-control left"
+                               [(ngModel)]="searchText" style="width:200px; margin-left:10px; margin-right:10px">
+                    </div>
+                </div>
+                <div class="col-md-1 compact">
+                    <button class="btn btn-default searchBtn" (click)="addParam()" style="margin-top:10px; margin-left:10px">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </div>
+                <div>
+                    <div class="results">
+                        <table class="table table-striped table-bordered"
+                               style="height:78vh;overflow:auto;display:inline-block; width:96%; margin-bottom:2px">
+                            <colgroup>
+                                <col style="width:15%">
+                                <col style="width:30%">
+                                <col style="width:30%">
+                                <col style="width:15%">
+                                <col style="width:100px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th [class.active]="order === 'Code'" (click)="setOrder('Code')">
+                                        {{config.getlabel('lbl_audit_paramtable_Code')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'LibelleCourt'" (click)="setOrder('LibelleCourt')">
+                                        {{config.getlabel('lbl_audit_paramtable_LibelleCourt')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'LibelleLong'" (click)="setOrder('LibelleLong')">
+                                        {{config.getlabel('lbl_audit_paramtable_LibelleLong')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'CodeDefaut'" (click)="setOrder('CodeDefaut')">
+                                        {{config.getlabel('lbl_audit_paramtable_CodeDefaut')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+
+                                    </th>
+                                    <th>{{config.getlabel('lbl_lot_Action_column')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let param of paramList | orderBy:'PkParamTable': order:reverse | filter:searchText">
+                                    <td> {{param.Code}}  </td>
+                                    <td> {{param.LibelleCourt}}  </td>
+                                    <td> {{param.LibelleLong}}  </td>
+                                    <td> {{param.CodeDefaut}}  </td>
+                                    <td style="text-align: -webkit-center; min-width:100px">
+                                        <button (click)="selectParam(param, true)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_showbtn')">
+                                            <span class="icon-stack">
+                                                <i class="fa fa-square-o icon-stack-big"></i>
+                                                <i class="fa fa-eye icon-stack-small"></i>
+                                            </span>
+                                        </button>
+                                        <button (click)="selectParam(param, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_editbtn')">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button (click)="deleteParam(param, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_deleteBtn')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selectParamDiv" [ngClass]="editContentClass" class="tab-pane fade">
+            <div class="x_panel" >
+                <form #lotForm="ngForm" (click)="expandRow(-1)">
+                    <div class="x_content">
+                        <div class="form-group col-md-5 col-sm-5 col-xs-12">
+                            <div class="row">
+                                <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                    {{config.getlabel('lbl_audit_paramtable_Code')}} :
+                                    <span class="red">*</span>
+                                </label>
+                                <input name="Code" id="Code" type="text" [(ngModel)]="selectedParam.Code"
+                                       class="form-control compactControl col-md-6 col-sm-7 col-xs-12" 
+                                       #Code="ngModel" [readonly]="isReadonly" required maxlength="12" minlength="1">
+                            </div>
+                            <div class="row">
+                                <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                    {{config.getlabel('lbl_audit_paramtable_CodeDefaut')}} :
+                                </label>
+                                <input name="CodeDefaut" id="CodeDefaut" type="text" [(ngModel)]="selectedParam.CodeDefaut"
+                                       class="form-control compactControl col-md-6 col-sm-7 col-xs-12"
+                                       #CodeDefaut="ngModel" [readonly]="isReadonly">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-7 col-sm-7 col-xs-12">
+                            <div class="row">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    {{config.getlabel('lbl_audit_paramtable_LibelleCourt')}} :
+                                    <span class="red">*</span>
+                                </label>
+                                <input name="LibelleCourt" id="LibelleCourt" type="text" [(ngModel)]="selectedParam.LibelleCourt"
+                                       class="form-control compactControl col-md-9 col-sm-8 col-xs-12"
+                                       #LibelleCourt="ngModel" [readonly]="isReadonly">
+                            </div>
+                            <div class="row">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >
+                                    {{config.getlabel('lbl_audit_paramtable_LibelleLong')}} :
+                                </label>
+                                <input name="LibelleLong" id="LibelleLong" type="text" [(ngModel)]="selectedParam.LibelleLong"
+                                       class="form-control compactControl col-md-9 col-sm-8 col-xs-12"
+                                       #LibelleLong="ngModel" [readonly]="isReadonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-right:10px; float:right" *ngIf="!isReadonly">
+                        <button type="button" class="btn btn-primary" *ngIf="selectedParam?.PkParamTable > 0"
+                                (click)="cancelEditParam()">
+                            {{config.getlabel('lbl_lot_cancelbtn')}}
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                                (click)="saveParam(false)">
+                            {{config.getlabel('lbl_saveBtn')}}
+                        </button>
+                    </div>
+                    <div style="margin-right:10px; float:right" *ngIf="isReadonly">
+                        <button type="button" class="btn btn-primary" (click)="editParam()">
+                            {{config.getlabel('lbl_lot_editbtn')}}
+                        </button>
+                    </div>
+                </form>
+                <div>
+                    <div style="display:flex" (click)="expandRow(-1)">
+                        <h4>Valeurs du parametre:</h4>
+                        <button *ngIf="!isReadonly" class="btn btn-default searchBtn" (click)="addParamDetail()" style="margin-left:10px; margin-top:0px">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+
+                    <table class="table table-striped table-bordered"
+                           style="max-height:67vh;overflow:auto;display:inline-block; width:100%">
+                        <colgroup>
+                            <col style="width:15%">
+                            <col style="width:25%">
+                            <col style="width:25%">
+                            <col style="width:10%">
+                            <col style="width:10%">
+                            <col style="width:10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th [class.active]="orderDetail === 'Code'" (click)="setOrderDetail('Code')">
+                                    {{config.getlabel('lbl_audit_paramdetail_Code')}}
+                                    <i *ngIf="reverseDetail" class="fa fa-angle-up"></i>
+                                    <i *ngIf="!reverseDetail" class="fa fa-angle-down"></i>
+                                </th>
+                                <th [class.active]="orderDetail === 'LibelleCourt'" (click)="setOrderDetail('LibelleCourt')">
+                                    {{config.getlabel('lbl_audit_paramdetail_LibelleCourt')}}
+                                    <i *ngIf="reverseDetail" class="fa fa-angle-up"></i>
+                                    <i *ngIf="!reverseDetail" class="fa fa-angle-down"></i>
+                                </th>
+                                <th [class.active]="orderDetail === 'LibelleLong'" (click)="setOrderDetail('LibelleLong')">
+                                    {{config.getlabel('lbl_audit_paramdetail_LibelleLong')}}
+                                    <i *ngIf="reverseDetail" class="fa fa-angle-up"></i>
+                                    <i *ngIf="!reverseDetail" class="fa fa-angle-down"></i>
+                                </th>
+                                <th [class.active]="orderDetail === 'Tri'" (click)="setOrderDetail('Tri')">
+                                    {{config.getlabel('lbl_audit_paramdetail_Tri')}}
+                                    <i *ngIf="reverseDetail" class="fa fa-angle-up"></i>
+                                    <i *ngIf="!reverseDetail" class="fa fa-angle-down"></i>
+                                </th>
+                                <th [class.active]="orderDetail === 'Actif'" (click)="setOrderDetail('Actif')">
+                                    {{config.getlabel('lbl_audit_paramdetail_Actif')}}
+                                    <i *ngIf="reverseDetail" class="fa fa-angle-up"></i>
+                                    <i *ngIf="!reverseDetail" class="fa fa-angle-down"></i>
+                                </th>
+                                <th>{{config.getlabel('lbl_lot_Action_column')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let param of selectedParam.ParamDetail | orderBy:'': orderDetail:reverseDetail; let $index=index;"
+                                (click)="expandRow($index)">
+                                <td>
+                                    <div *ngIf="$index !== expandedIndex">{{param.Code}}</div>
+                                    <div *ngIf="$index === expandedIndex">
+                                        <input type="text" autofocus [(ngModel)]="param.Code" style="max-width:100px" class="form-control compactControl">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="$index !== expandedIndex">{{param.LibelleCourt}}</div>
+                                    <div *ngIf="$index === expandedIndex">
+                                        <input type="text" [(ngModel)]="param.LibelleCourt" class="form-control compactControl">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="$index !== expandedIndex">{{param.LibelleLong}}</div>
+                                    <div *ngIf="$index === expandedIndex">
+                                        <input type="text" [(ngModel)]="param.LibelleLong" class="form-control compactControl">
+                                    </div>
+                                </td>
+                                <td style="text-align: -webkit-center;">
+                                    <div *ngIf="$index !== expandedIndex">{{param.Tri}}</div>
+                                    <div *ngIf="$index === expandedIndex">
+                                        <input type="text" [(ngModel)]="param.Tri" class="compactControl" style="max-width:50px">
+                                    </div>
+                                </td>
+                                <td style="text-align: -webkit-center;">
+                                    <input type="checkbox" [(ngModel)]="param.Actif" class="compactControl" [disabled]="($index !== expandedIndex)">
+                                </td>
+                                <td style="text-align: -webkit-center;">
+                                    <div *ngIf="!isReadonly">
+                                        <button (click)="deleteParamDetail(param, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_deleteBtn')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal audit-->
+    <div style="position:absolute; bottom: 10px">
+        <div class="modal fade" bsModal #auditModal="bs-modal" [config]="{backdrop: 'static'}"
+             tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="auditModal.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <audit-list selectedTable="paramtable"></audit-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal confirmation delete et changement du code-->
+    <div class="modal fade" bsModal id="confirmEditModal" #confirmEditModal="bs-modal" style="top:200px" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding:10px; width:600px; margin-left:100px;display: inline-block">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">{{modalHeader}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div>{{modalBody}}</div>
+                    <div style="float:right; margin-top:20px">
+                        <button (click)="confirmEditModal.hide()" id="hideModalBtn" type="button" class="btn btn-primary">Annuler</button>
+                        <button (click)="confirmModal(modalType)" type="button" class="btn btn-primary">Confirmer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng2-toasty [position]="'top-right'">
+</ng2-toasty>
+
+

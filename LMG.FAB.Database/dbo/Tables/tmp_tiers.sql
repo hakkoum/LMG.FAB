@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[tmp_tiers] (
+    [TypeTiers]         NVARCHAR (256) NULL,
+    [Nom]               NVARCHAR (256) NULL,
+    [Adresse1]          NVARCHAR (256) NULL,
+    [Adresse2]          NVARCHAR (256) NULL,
+    [Adresse3]          NVARCHAR (256) NULL,
+    [Code_Postal]       NVARCHAR (256) NULL,
+    [Ville]             NVARCHAR (256) NULL,
+    [Pays]              NVARCHAR (256) NULL,
+    [Nom_Contact]       NVARCHAR (256) NULL,
+    [Telephone]         NVARCHAR (256) NULL,
+    [Fax]               NVARCHAR (256) NULL,
+    [User]              NVARCHAR (256) NULL,
+    [Date_Maj]          NVARCHAR (256) NULL,
+    [Assu]              NVARCHAR (256) NULL,
+    [Forfait_ADM]       NVARCHAR (256) NULL,
+    [Forfait_FilPrin]   NVARCHAR (256) NULL,
+    [Actif]             NVARCHAR (256) NULL,
+    [Abrev_Nom]         NVARCHAR (256) NULL,
+    [No_Ordre]          NVARCHAR (256) NULL,
+    [Sigle]             NVARCHAR (256) NULL,
+    [Contact_Fab]       NVARCHAR (256) NULL,
+    [libelle_cde]       NVARCHAR (256) NULL,
+    [date_modification] NVARCHAR (256) NULL
+);
+

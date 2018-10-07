@@ -1,0 +1,13 @@
+
+<div>
+    <input type="text" bsDatepicker [disabled]="readonly"
+           class="form-control" [readonly]="readonly"
+           #dp1="bsDatepicker" style="width:60%; min-width:80px; height:22px"
+           [bsConfig]="{ containerClass:'theme-default', showWeekNumbers :false }"
+           [ngModel]="date | date:'dd/MM/yyyy'" (ngModelChange)="setDate($event)">
+    <div class="input-group-append" style="float:left">
+        <button class="btn btn-outline-secondary border-right" (click)="dp1.toggle()" type="button" [disabled]="readonly" style="height:22px; margin-bottom:0px">
+            <i class="fa fa-calendar " style="display:block; font-size:12px;  margin-top:-2px"></i>
+        </button>
+    </div>
+</div>

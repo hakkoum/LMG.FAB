@@ -1,0 +1,12 @@
+.compact {
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 12px;
+    margin-bottom: 2px;
+    width:70%
+}
+
+.border-right {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}

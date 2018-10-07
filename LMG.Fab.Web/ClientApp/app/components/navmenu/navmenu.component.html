@@ -1,0 +1,97 @@
+
+<div class=''>
+
+    <div class='navbar nav_title'>
+        <a class='site_title' [routerLink]="['/home']"><i class="fa fa-industry" aria-hidden="true"></i> GESFAB</a>
+    </div>
+    <div class='clearfix'></div>
+
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+            <ul class="nav side-menu">
+                <li class="" style="visibility:hidden">
+                    <a id="homeli" (click)="anchorClicked($event)"><i class="fa fa-home"></i> Mon espace <span id="homechevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li [routerLinkActive]="['link-active']">
+                            <a [routerLink]="['/home']">
+                                <span class="glyphicon fa fa-snowflake-o" aria-hidden="true"></span> Mes alertes
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a id="dossli" (click)="anchorClicked($event)"><i class="fa fa-edit"></i> Dossier de Fab <span id="dosschevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li [routerLinkActive]="['link-active']" *ngIf="userProfil?.RightsList?.includes('FAB_DEVIS')">
+                            <a [routerLink]="['/dossier-list']">
+                                <span class='glyphicon glyphicon-education'></span> Dossiers
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--<li>
+                    <a id="planli" (click)="anchorClicked($event)"><i class="fa fa-desktop"></i> Planification <span id="planchevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                </li>-->
+            </ul>
+        </div>
+
+        <div class="menu_section" *ngIf="userProfil?.RightsList?.includes('FAB_ADMIN')">
+            <!--<h3>Administration</h3>-->
+            <ul class="nav side-menu">
+                <li>
+                    <a id="refli" (click)="anchorClicked($event)"><i class="fa fa-list"></i> Tables de référence <span id="refchevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="">
+                        <li [routerLinkActive]="['link-active']" *ngIf="userProfil?.RightsList?.includes('FAB_DEVIS')">
+                            <a [routerLink]="['/lot-list']">
+                                <span class='glyphicon glyphicon-education'></span>Lots
+                            </a>
+                        </li>
+                        <li [routerLinkActive]="['link-active']">
+                            <a [routerLink]="['/tiers-list']">
+                                <i class="fa fa-address-card-o"></i>Tiers
+                            </a>
+                        </li>
+                        <li [routerLinkActive]="['link-active']">
+                            <a [routerLink]="['/param-list']">
+                                <i class="fa fa-list-alt"></i>Tables de paramètres
+                            </a>
+                        </li>
+                        <li [routerLinkActive]="['link-active']">
+                            <a [routerLink]="['/coll-list']">
+                                <i class="fa fa-list-ul"></i>Collections techniques
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="adminli" (click)="anchorClicked($event)"><i class="fa fa-user"></i>Administration<span id="refchevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="">
+                        <li [routerLinkActive]="['link-active']">
+                            <a id="auditlist" [routerLink]="['/audit-list']">
+                                <i class="fa fa-clock-o"></i> Historique
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li style="visibility:hidden">
+                    <a id="secli" (click)="anchorClicked($event)"><i class="fa fa-windows"></i> Sécurité <span id="secchevron" class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="">
+                        <li><a href="#">Utilisateurs</a></li>
+                        <li><a href="#">Droits</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="menu_section footerNav">
+            <div style="padding-left: 10px; color: #9d9d9d">&copy; {{copyrightYear | date: 'y'}} - FabApp ({{config.get('global','version')}})<span></span></div>
+        </div>
+
+    </div>
+
+</div>

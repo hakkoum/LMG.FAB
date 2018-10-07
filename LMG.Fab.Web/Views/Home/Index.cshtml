@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "Gestion Fabrication";
+}
+
+@*<app asp-prerender-module="ClientApp/dist/main-server" class="container body">Loading...</app>*@
+
+@*<link href="~/dist/custom.css" rel="stylesheet" />*@
+
+<style type="text/css">
+    .popover {
+        max-width: 600px;
+    }
+    .tooltip.top .tooltip-arrow {
+        border-top-color: red;
+    }
+    .tooltip-inner {
+        background-color: whitesmoke !important;
+        max-width: 500px !important;
+        min-width: 200px !important;
+        color: inherit;
+        border: 1px solid #00acd6;
+    }
+
+    .tooltip-inner p {
+        margin-bottom: 2px;
+        color: inherit;
+        font-size: 11px;
+    }
+
+    .tooltip.top .tooltip-arrow {
+        border-top-color: #00acd6;
+    }
+
+    .tooltip.right .tooltip-arrow {
+        border-right-color: #00acd6;
+    }
+
+    .tooltip.bottom .tooltip-arrow {
+        border-bottom-color: #00acd6;
+    }
+
+    .tooltip.left .tooltip-arrow {
+        border-left-color: #00acd6;
+    }
+
+    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+        white-space: initial !important;
+        padding: 2px 4px;
+    }
+    .ngx-datatable.fixed-row .datatable-scroll {
+        white-space: initial !important;
+    }
+    .ngx-datatable.material .datatable-header .datatable-header-cell {
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 14px;
+    }
+    .ngx-datatable.scroll-vertical .datatable-body
+    {
+        overflow-x:hidden;
+    }
+</style>
+
+<app class="container body">Loading...</app>
+
+
+<script src="~/dist/vendor.js" asp-append-version="true"></script>
+@section scripts {
+    <script src="~/dist/main-client.js" asp-append-version="true"></script>
+}
+
+<script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script>

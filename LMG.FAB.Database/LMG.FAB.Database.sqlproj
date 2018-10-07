@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>LMG.FAB.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{7ceff3a2-4cac-4313-836c-199cb09cb812}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>LMG.FAB.Database</RootNamespace>
+    <AssemblyName>LMG.FAB.Database</AssemblyName>
+    <ModelCollation>1036,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DefaultCollation>French_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\commentaire.sql" />
+    <Build Include="dbo\Tables\elImpositionCahier.sql" />
+    <Build Include="dbo\Tables\paramTable.sql" />
+    <Build Include="dbo\Tables\typeElement.sql" />
+    <Build Include="dbo\Tables\elImpositionFeuille.sql" />
+    <Build Include="dbo\Tables\typeElementProcessus.sql" />
+    <Build Include="dbo\Tables\tmp_lot.sql" />
+    <Build Include="dbo\Tables\tmp_param_rela.sql" />
+    <Build Include="dbo\Tables\tmp_prestations.sql" />
+    <Build Include="dbo\Tables\tmp_produits.sql" />
+    <Build Include="dbo\Tables\tmp_param_det.sql" />
+    <Build Include="dbo\Tables\paramDetail.sql" />
+    <Build Include="dbo\Tables\tmp_tirages.sql" />
+    <Build Include="dbo\Tables\Audit.sql" />
+    <Build Include="dbo\Tables\tmp_param_titre.sql" />
+    <Build Include="dbo\Tables\dossier.sql" />
+    <Build Include="dbo\Tables\tmp_tarifs.sql" />
+    <Build Include="dbo\Tables\tmp_tiers.sql" />
+    <Build Include="dbo\Tables\tmp_articles.sql" />
+    <Build Include="dbo\Tables\tmp_natures.sql" />
+    <Build Include="dbo\Tables\composant.sql" />
+    <Build Include="dbo\Tables\elPapier.sql" />
+    <Build Include="dbo\Tables\collectionTechnique.sql" />
+    <Build Include="dbo\Tables\produit.sql" />
+    <Build Include="dbo\Tables\produitGamme.sql" />
+    <Build Include="dbo\Tables\devis.sql" />
+    <Build Include="dbo\Tables\Audit_Detail.sql" />
+    <Build Include="dbo\Tables\tiers.sql" />
+    <Build Include="dbo\Tables\prestation.sql" />
+    <Build Include="dbo\Tables\element.sql" />
+    <Build Include="dbo\Tables\machine.sql" />
+    <Build Include="dbo\Tables\machineGamme.sql" />
+    <Build Include="dbo\Tables\amalgame.sql" />
+    <Build Include="dbo\Tables\amalgameDetail.sql" />
+    <Build Include="dbo\Tables\lot.sql" />
+    <Build Include="dbo\Tables\article.sql" />
+    <Build Include="dbo\Tables\elFaconnage.sql" />
+    <Build Include="dbo\Tables\ficheStock.sql" />
+    <Build Include="dbo\Views\vw_lot.sql" />
+    <Build Include="dbo\Views\vw_tiers_prestations.sql" />
+    <Build Include="dbo\Views\vw_prestation_machine_gamme.sql" />
+    <Build Include="dbo\Views\vw_audit.sql" />
+    <Build Include="dbo\Views\vw_paramList.sql" />
+    <Build Include="dbo\Views\vw_dossier_elements.sql" />
+    <Build Include="dbo\Views\vw_articles.sql" />
+    <Build Include="Security\lmg_fab.sql" />
+    <Build Include="Security\lmg_fab_1.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Stored Procedures\import_4d_data.sql" />
+    <Build Include="dbo\Tables\elImpression.sql" />
+    <Build Include="dbo\Views\vue_article.sql" />
+    <Build Include="Security\LMG_SSRS_ReadOnly.sql" />
+    <Build Include="dbo\Views\vue_tirage.sql" />
+  </ItemGroup>
+</Project>

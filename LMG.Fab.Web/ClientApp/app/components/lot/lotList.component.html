@@ -1,0 +1,212 @@
+
+<div>
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+            <li [ngClass]="searchTabClass">
+                <a href="#search" data-toggle="pill">
+                    {{config.getlabel('lbl_tab_search')}}
+                </a>
+            </li>
+            <li [ngClass]="editTabClass">
+                <a data-toggle="pill" href="#selectedLot" style="padding-right:2px">
+                    {{config.getlabel('lbl_tab_detail')}}
+                    <button class="close closeTab" (click)="closeEditTab(true)">x</button>
+                </a>
+            </li>
+        </ul>
+        <div class="lotListNav" *ngIf="selectedLot.PkLot">
+            <button type="button" class="btn btn-outline-light" (click)="previousLot()">
+                <span><i class="fa fa-chevron-left"></i></span>
+            </button>
+            <button type="button" class="btn btn-outline-light" (click)="nextLot()">
+                <span><i class="fa fa-chevron-right"></i></span>
+            </button>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div id="search" class="tab-pane fade in active">
+            <div class="x_panel">
+                <button class="btn btn-default" (click)="staticModal.show()"
+                        style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px;  background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                    <i class="fa fa-clock-o"></i>
+                </button>
+                <div class="form-horizontal col-md-11 col-sm-11 col-xs-11 compact well">
+                    <div>
+                        <div class="col-md-3 col-sm-6 col-xs-8 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">
+                                    {{config.getlabel('lbl_audit_lot_CodeLot')}}
+                                </label>
+                                <input type="search" class="form-control col-md-8 compact"
+                                       [(ngModel)]="codeFilter" style="width:60%">
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">{{config.getlabel('lbl_libelle')}}</label>
+                                <input type="search" class="form-control col-md-8 compact" [(ngModel)]="libelleFilter"
+                                       style="width:60%">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-4 col-xs-6 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-6 compact">{{config.getlabel('lbl_audit_lot_DateMiseEnVente')}}</label>
+                                <div class="input-group date col-md-8 col-sm-6 col-xs-6 compact"
+                                     style="float:left">
+                                    <date-picker [date]="dateDebutFilter" (dateChange)="dateDebutFilter = $event"></date-picker>
+                                </div>
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-6 compact">
+                                    {{config.getlabel('lbl_audit_date_A')}}
+                                </label>
+                                <div class="input-group date col-md-8 col-sm-6 col-xs-6 compact" id='datetimepicker1'>
+                                    <date-picker [date]="dateFinFilter" (dateChange)="dateFinFilter = $event"></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-12 form-group">
+                            <select class="form-control compact" [(ngModel)]="processIdFilter">
+                                <option *ngFor="let c of processusList" [ngValue]="c.PkParamDetail">{{c.LibelleCourt}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                            <button class="btn btn-default" (click)="searchLot()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="clear:both">
+                        {{config.getlabel('lbl_resultat_recherche_count')}} : {{lots.length}}
+                    </div>
+                </div>
+                <div class="col-md-1 compact">
+                    <button class="btn btn-default searchBtn" (click)="addLot()" style="margin-top:10px">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </div>
+                <div>
+                    <div class="results">
+                        <table class="table table-striped table-bordered" style="height:72vh;overflow:auto;display:inline-block; width:96%; margin-bottom:2px">
+                            <colgroup>
+                                <col style="width:20px">
+                                <col style="width:20%">
+                                <col style="width:10%">
+                                <col style="width:20%">
+                                <col style="width:12%">
+                                <col style="width:18%">
+                                <col style="width:20%">
+                                <col style="width:60px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <input type="checkbox" name="all"
+                                               [checked]="isAllChecked()" (change)="checkAll($event)" />
+                                    </th>
+                                    <th [class.active]="order === 'NomLot'" (click)="setOrder('NomLot')">
+                                        {{config.getlabel('lbl_audit_lot_NomLot')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+
+                                    </th>
+                                    <th [class.active]="order === 'CodeLot'" (click)="setOrder('CodeLot')">
+                                        {{config.getlabel('lbl_audit_lot_CodeLot')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'Nomprocessus'" (click)="setOrder('NomProcessus')">
+                                        {{config.getlabel('lbl_audit_lot_FkParamDetailProc')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'EnCours'" (click)="setOrder('EnCours')">
+                                        {{config.getlabel('lbl_audit_lot_EnCours')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+
+                                    </th>
+                                    <th [class.active]="order === 'DateArriveeLivres'" (click)="setOrder('DateArriveeLivres')">
+                                        {{config.getlabel('lbl_audit_lot_DateArriveeLivres')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th [class.active]="order === 'DateMiseEnVente'" (click)="setOrder('DateMiseEnVente')">
+                                        {{config.getlabel('lbl_audit_lot_DateMiseEnVente')}}
+                                        <i *ngIf="reverse" class="fa fa-angle-up"></i>
+                                        <i *ngIf="!reverse" class="fa fa-angle-down"></i>
+                                    </th>
+                                    <th style="text-align: -webkit-center; width:60px">{{config.getlabel('lbl_lot_Action_column')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let lot of lots | orderBy:'PkLot': order:reverse">
+                                    <td class="text-center">
+                                        <input type="checkbox"
+                                               value="{{lot.PkLot}}" [(ngModel)]="lot.IsSelected" />
+                                    </td>
+                                    <td> {{lot.NomLot}}  </td>
+                                    <td> {{lot.CodeLot}}  </td>
+                                    <td> {{lot.NomProcessus}}  </td>
+                                    <td style="text-align: center">
+                                        <span *ngIf="lot.EnCours"><i class="fa fa-check-square-o"></i></span>
+                                        <span *ngIf="!lot.EnCours"><i class="fa fa-square-o"></i></span>
+                                    </td>
+                                    <td> {{lot.DateArriveeLivres | date:'dd/MM/yyyy'}}  </td>
+                                    <td> {{lot.DateMiseEnVente | date:'dd/MM/yyyy'}}  </td>
+                                    <td  style="text-align: -webkit-center; width:60px">
+                                        <button (click)="selectLot(lot, false)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_showbtn')">
+                                            <span class="icon-stack">
+                                                <i class="fa fa-square-o icon-stack-big"></i>
+                                                <i class="fa fa-eye icon-stack-small"></i>
+                                            </span>
+                                        </button>
+                                        <button (click)="selectLot(lot, true)" type="button" class="btn btn-link compactBtn" [tooltip]="config.getlabel('lbl_lot_editbtn')">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="dropup" style="float: right;">
+                            <button class="btn btn-success dropdown-toggle" type="button"
+                                    id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Actions
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" style="min-width:100px">
+                                <li><a (click)="Disablelot()" class="btn btn-outline-success">Desactiver</a></li>
+                                <li><a (click)="Disablelot()" class="btn btn-outline-success">Verrouiller</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div style="position:absolute; bottom: 10px">
+                <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+                     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <audit-list selectedTable="lot"></audit-list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selectedLot" class="tab-pane fade in active" *ngIf="showEditTab">
+            <div class="x_panel" style="height:85vh">
+                <lot-edit [lot]="selectedLot" [isReadonly]="!editMode" (closeTabAction)="closeEditTab($event)"></lot-edit>
+            </div>
+        </div>
+
+    </div>
+</div>

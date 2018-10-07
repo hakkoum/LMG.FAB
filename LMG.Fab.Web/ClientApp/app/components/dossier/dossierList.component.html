@@ -1,0 +1,752 @@
+
+<div>
+    <br />
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+            <li class="active">
+                <a href="#search" data-toggle="pill">
+                    {{config.getlabel('lbl_tab_search')}}
+                </a>
+            </li>
+            <li>
+                <a data-toggle="pill" href="#selectedLot" style="padding-right:2px">
+                    dossier-5770
+                    <button class="close closeTab">x</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="search" class="tab-pane fade in active">
+            <div class="x_panel" style="height:85vh">
+                <div>
+                    <button class="btn btn-default" (click)="auditModal.show()"
+                            style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px; height:30px;
+                    background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                        <i class="fa fa-clock-o"></i>
+                    </button>
+                    <button class="btn btn-default" (click)="alertModal.show()"
+                            style="padding:3px 6px;float:right;position:relative;margin-top: -10px; height:30px;
+                            background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                        <i class="fa fa-exclamation" style="font-size:16px"></i>
+                        <span class="badge bg-green" style="right:0px;top:-5px; padding:3px 5px">4</span>
+                    </button>
+                </div>
+
+                <div class="form-horizontal col-md-11 col-sm-11 col-xs-11 compact well">
+                    <div>
+                        <div class="col-md-3 col-sm-6 col-xs-8 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">
+                                    Code :
+                                </label>
+                                <input type="search" class="form-control col-md-8 compact"
+                                       [(ngModel)]="codeFilter" style="width:50%">
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 compact">Nom :</label>
+                                <input type="search" class="form-control col-md-8 compact" [(ngModel)]="libelleFilter"
+                                       style="width:50%">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-4 col-xs-6 form-group compact">
+                            <div class="row compact">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-6 compact">{{config.getlabel('lbl_audit_lot_DateMiseEnVente')}}</label>
+                                <div class="input-group date col-md-8 col-sm-6 col-xs-6 compact"
+                                     style="float:left">
+                                    <date-picker [date]="dateDebutFilter" (dateChange)="dateDebutFilter = $event"></date-picker>
+                                </div>
+                            </div>
+                            <div class="row compact">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-6 compact">
+                                    {{config.getlabel('lbl_audit_date_A')}}
+                                </label>
+                                <div class="input-group date col-md-8 col-sm-6 col-xs-6 compact" id='datetimepicker1'>
+                                    <date-picker [date]="dateFinFilter" (dateChange)="dateFinFilter = $event"></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                            <button class="btn btn-default" (click)="searchLot()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="clear:both">
+                        {{config.getlabel('lbl_resultat_recherche_count')}} :
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="results">
+                        <br />
+                        Liste des dossiers
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="selectedLot" class="tab-pane fade">
+            <div class="x_panel" style="height:85vh; padding-left:2px">
+                <div>
+                    <button class="btn btn-default" (click)="auditModal.show()"
+                            style="padding:3px 6px;float:right;position:relative; margin-right: -17px; margin-top: -10px; height:30px;
+                    background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                        <i class="fa fa-clock-o"></i>
+                    </button>
+                    <button class="btn btn-default" (click)="alertModal.show()"
+                            style="padding:3px 6px;float:right;position:relative;margin-top: -10px; height:30px;
+                            background-color: rgb(221, 221, 221); border-radius:0px 0px 0px 3px">
+                        <i class="fa fa-exclamation" style="font-size:16px"></i>
+                        <span class="badge bg-green" style="right:0px;top:-5px; padding:3px 5px">2</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="col-md-3 col-xs-12 compactCol">
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                {{config.getlabel('lbl_audit_lot_CodeLot')}} :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                    Lot0011
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                N tirage :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                N Suite :
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12 compactCol">
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Chrono:
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                N Interforum :
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                Tirage :
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xs-12 compactCol">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Auteur:
+                                <span class="red">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Titre :
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:-webkit-box;">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Format :
+                            </label>
+                            <div class="col-md-3 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Nb de pages :
+                            </label>
+                            <div class="col-md-3 col-sm-9 col-xs-12 input-group">
+                                <input name="NomLot" type="text" class="form-control compactControl">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+                <div>
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs customTab" role="tablist">
+                            <li class="active">
+                                <a href="#tab1" data-toggle="pill">
+                                    General
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab2" data-toggle="pill">
+                                    Couverture
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab3" data-toggle="pill">
+                                    Jaquette
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="clear:both"></div>
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade in active">
+                            <div style="clear:both"></div>
+                            <div class="col-md-2 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title" style="margin:0px; padding:1px">
+                                        <h4 style="margin:0px; padding:1px">Accessoires</h4>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Jaquette</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Rhodoid</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Encart</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Coffret</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Couverture</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Couv. rabat</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Bande</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Hors Texte</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Illustr. in</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_content">
+                                        <div class="col-md-8 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                    Responsable :
+                                                    <span class="red">*</span>
+                                                </label>
+                                                <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                    <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                        <option value="all">Fabien masson</option>
+                                                        <option value="all">Aimad Hakkoum</option>
+                                                        <option value="all">Eric dupont</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                    Imprimeur :
+                                                    <span class="red">*</span>
+                                                </label>
+                                                <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                    <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                        <option value="all">Norm roto</option>
+                                                        <option value="all">Norm roto 001</option>
+                                                        <option value="all">Norm roto 004</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                    Machine :
+                                                    <span class="red">*</span>
+                                                </label>
+                                                <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                    <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                        <option value="all">Norm roto T.92</option>
+                                                        <option value="all">Norm roto 00</option>
+                                                        <option value="all">Norm roto XX</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                    Nb. couleurs :
+                                                    <span class="red">*</span>
+                                                </label>
+                                                <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                    <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                        <option value="all">1</option>
+                                                        <option value="all">2</option>
+                                                        <option value="all">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                    Papier :
+                                                </label>
+                                                <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                    <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                                    Tirage :
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                                                    <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 col-sm-3 col-xs-12" style="padding-left:0px">
+                                                    Qtte a livrer Maleshebres
+                                                </label>
+                                                <div class="col-md-6 col-sm-9 col-xs-12 input-group">
+                                                    <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-xs-12">
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                    No Fiche 1:
+                                                </label>
+                                                <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                    <select class="form-control" multiple style="height:100px !important">
+                                                        <option>1-aaaaa</option>
+                                                        <option>2-bbbbb</option>
+                                                        <option>3-ccccc</option>
+                                                        <option>4-ddddd</option>
+                                                        <option>5-ddddd</option>
+                                                        <option>6-ddddd</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                    No Fiche 1:
+                                                </label>
+                                                <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                    <select class="form-control" multiple style="height:100px !important">
+                                                        <option>1-aaaaa</option>
+                                                        <option>2-bbbbb</option>
+                                                        <option>3-ccccc</option>
+                                                        <option>4-ddddd</option>
+                                                        <option>5-ddddd</option>
+                                                        <option>6-ddddd</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                    No Fiche 1:
+                                                </label>
+                                                <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                    <select class="form-control" multiple style="height:100px !important">
+                                                        <option>1-aaaaa</option>
+                                                        <option>2-bbbbb</option>
+                                                        <option>3-ccccc</option>
+                                                        <option>4-ddddd</option>
+                                                        <option>5-ddddd</option>
+                                                        <option>6-ddddd</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_content">
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Avis de reimp</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Valider la fiche</label>
+                                            </div>
+                                            <div class="row">
+                                                <input name="EnCours" type="checkbox" class="form-control compactControl" style="float:left">
+                                                <label class="control-label" style="float:left; padding-left:2px; padding-top:8px">Edition</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="x_panel">
+                                            <div class="x_title" style="margin:0px; padding:1px">
+                                                <h4 style="margin:0px; padding:1px">Imposition</h4>
+                                            </div>
+                                            <div class="x_content">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="row">
+                                                        <label class="control-label" style="float:left; padding-right:2px; padding-top:4px">Nb Pages</label>
+                                                        <input name="NomLot" type="text" class="form-control compactControl" style="width:50px">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="row">
+                                                        <label class="control-label" style="float:left; padding-right:2px; padding-top:4px">Nb cahiers</label>
+                                                        <input name="NomLot" type="text" class="form-control compactControl" style="width:50px">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-xs-12">
+                                                    <table style="width:100%; margin-top:5px">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Cahiers de</th>
+                                                                <th style="width:20px"></th>
+                                                                <th></th>
+                                                                <th style="width:20px"></th>
+                                                                <th>Resultat</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="32">
+                                                                </td>
+                                                                <td>
+                                                                    X
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="9">
+                                                                </td>
+                                                                <td>
+                                                                    =
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="288">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    X
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    =
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    X
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    =
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    X
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                                <td>
+                                                                    =
+                                                                </td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="0">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" style="text-align:-webkit-center">
+                                                                    Total
+                                                                </td>
+
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="9">
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <input name="NomLot" type="text" class="form-control compactControl" style="width:50px" value="288">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-8 col-xs-12" style="clear:left">
+                                <div class="x_panel">
+                                    <div class="x_title" style="margin:0px; padding:1px">
+                                        <h4 style="margin:0px; padding:1px">Faconnage</h4>
+                                    </div>
+                                    <div class="x_panel">
+                                        <div class="x_content">
+                                            <div class="col-md-8 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                        Responsable :
+                                                        <span class="red">*</span>
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                        <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                            <option value="all">Fabien masson</option>
+                                                            <option value="all">Aimad Hakkoum</option>
+                                                            <option value="all">Eric dupont</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                        Imprimeur :
+                                                        <span class="red">*</span>
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                        <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                            <option value="all">Norm roto</option>
+                                                            <option value="all">Norm roto 001</option>
+                                                            <option value="all">Norm roto 004</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                        Machine :
+                                                        <span class="red">*</span>
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                        <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                            <option value="all">Norm roto T.92</option>
+                                                            <option value="all">Norm roto 00</option>
+                                                            <option value="all">Norm roto XX</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                        Nb. couleurs :
+                                                        <span class="red">*</span>
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                        <select class="form-control compact col-md-8 " style="max-width:90%">
+                                                            <option value="all">1</option>
+                                                            <option value="all">2</option>
+                                                            <option value="all">3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5 col-sm-3 col-xs-12">
+                                                        Papier :
+                                                    </label>
+                                                    <div class="col-md-7 col-sm-9 col-xs-12 input-group">
+                                                        <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6 col-sm-3 col-xs-12">
+                                                        Tirage :
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                                                        <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6 col-sm-3 col-xs-12" style="padding-left:0px">
+                                                        Qtte a livrer Maleshebres
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-9 col-xs-12 input-group">
+                                                        <input name="EnCours" type="text" class="form-control compactControl" style="max-width:90%">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-xs-12">
+                                                <div class="form-group col-md-4">
+                                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                        No Fiche 1:
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                        <select class="form-control" multiple style="height:100px !important">
+                                                            <option>1-aaaaa</option>
+                                                            <option>2-bbbbb</option>
+                                                            <option>3-ccccc</option>
+                                                            <option>4-ddddd</option>
+                                                            <option>5-ddddd</option>
+                                                            <option>6-ddddd</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                        No Fiche 1:
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                        <select class="form-control" multiple style="height:100px !important">
+                                                            <option>1-aaaaa</option>
+                                                            <option>2-bbbbb</option>
+                                                            <option>3-ccccc</option>
+                                                            <option>4-ddddd</option>
+                                                            <option>5-ddddd</option>
+                                                            <option>6-ddddd</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">
+                                                        No Fiche 1:
+                                                    </label>
+                                                    <div class="col-md-12 col-sm-6 col-xs-12 input-group">
+                                                        <select class="form-control" multiple style="height:100px !important">
+                                                            <option>1-aaaaa</option>
+                                                            <option>2-bbbbb</option>
+                                                            <option>3-ccccc</option>
+                                                            <option>4-ddddd</option>
+                                                            <option>5-ddddd</option>
+                                                            <option>6-ddddd</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab2" class="tab-pane fade">
+
+                        </div>
+                        <div id="tab3" class="tab-pane fade">
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div style="position:absolute; bottom: 10px">
+        <div class="modal fade" bsModal #auditModal="bs-modal" [config]="{backdrop: 'static'}"
+             tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">{{config.getlabel('lbl_audit_popup_title')}}</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="auditModal.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <audit-list selectedTable="dossier"></audit-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" bsModal #alertModal="bs-modal" [config]="{backdrop: 'static'}"
+         tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Liste des alerts</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="alertModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <alert-list></alert-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

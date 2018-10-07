@@ -1,0 +1,121 @@
+<div class="nav_menu {{envClass}}">
+    <nav>
+        <div class="nav toggle">
+            <a id="menu_toggle" (click)="toggleClicked($event)"><i class="fa fa-bars"></i></a>
+        </div>
+        <h3 style="display:-webkit-inline-box; margin-top:16px">{{titleService.Title}}</h3>
+        <ul class="nav navbar-nav navbar-right" style="width: 60% !important">
+            <li class="">
+                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    {{userProfil?.FirstName}} {{userProfil?.LastName}}
+                    <span class=" fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                        <a href="javascript:;">
+                            <span class="badge bg-red pull-right">50%</span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                </ul>
+            </li>
+
+            <li role="presentation" class="dropdown">
+                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-exclamation-circle" style="font-size:20px"></i>
+                    <span class="badge bg-green" style="right:0px;top:6px; font-size:11px">6</span>
+                </a>
+                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                        <a>
+                            <span class="image"><i class="fa fa-exclamation-circle" style="font-size:20px"></i></span>
+                            <span>
+                                <span>Article: 33453</span>
+                                <span class="time" style="right:12px">10/03/2017 a 16:20</span>
+                            </span>
+                            <span class="message">
+                                L'article (AUX CONFINS DU SENS) a change de nombre de pages de 266 a 280.
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="image"><i class="fa fa-exclamation-circle" style="font-size:20px"></i></span>
+                            <span>
+                                <span>Tirage: 33422</span>
+                                <span class="time" style="right:12px">10/03/2017 a 10:30</span>
+                            </span>
+                            <span class="message">
+                                Le tirage () a change de quantite de 1500 a 2000.
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="image"><i class="fa fa-exclamation-circle" style="font-size:20px"></i></span>
+                            <span>
+                                <span>Tirage: 33422</span>
+                                <span class="time" style="right:12px">10/03/2017 a 10:30</span>
+                            </span>
+                            <span class="message">
+                                Le tirage () a change de quantite de 1500 a 2000.
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="image"><i class="fa fa-exclamation-circle" style="font-size:20px"></i></span>
+                            <span>
+                                <span>Tirage: 33422</span>
+                                <span class="time" style="right:12px">10/03/2017 a 10:30</span>
+                            </span>
+                            <span class="message">
+                                Le tirage () a change de quantite de 1500 a 2000.
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="image"><i class="fa fa-exclamation-circle" style="font-size:20px"></i></span>
+                            <span>
+                                <span>Tirage: 33422</span>
+                                <span class="time" style="right:12px">10/03/2017 a 10:30</span>
+                            </span>
+                            <span class="message">
+                                Le tirage () a change de quantite de 1500 a 2000.
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="text-center">
+                            <a (click)="alertModal.show()">
+                                <strong>Voir toute les alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="modal fade" bsModal #alertModal="bs-modal" [config]="{backdrop: 'static'}"
+         tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Liste des alerts</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="alertModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <alert-list></alert-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

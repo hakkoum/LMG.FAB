@@ -1,0 +1,29 @@
+.checkLabelLeft {
+    text-align: left !important;
+    padding-top: 2px !important;
+}
+
+.bs-datepicker-container {
+    padding: 2px !important;
+}
+
+
+.bs-calendar-container {
+    padding: 2px;
+}
+
+.form-control {
+    height: 30px !important;
+    margin-top: 4px;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #398439;
+    border-color: #255625;
+}
+
+.dropdown-menu > li > a{
+    padding:4px;
+}

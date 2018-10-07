@@ -1,0 +1,11 @@
+{
+  "environment": "Development",
+  "appCode": "FAB.Ref.Synchro",
+  "version": "1.0",
+  "ConnectionStrings": {
+    "FabConnectionString": "Data Source=lmgvmproj2k8\\rec;Initial Catalog=LMG_FAB;User=lmg_fab;Password=lmg_fab?;",
+    "ReflmgConnectionString": "Data Source=lmgvmproj2k8\\rec;Initial Catalog=Reflmg;User=lmg_fab;Password=lmg_fab?;"
+  },
+  "monthsNames": [ "JV", "FV", "MR", "AV", "MI", "JN", "JL", "AO", "SP", "OC", "NV", "DC" ],
+  "dateMin": "01/01/2010"
+}

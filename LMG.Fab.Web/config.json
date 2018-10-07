@@ -1,0 +1,27 @@
+{
+  "server.urls": "http://localhost:5000",
+  "environment": "Development",
+  "appCode": "FABRIC",
+  "version": "20180207.1",
+  "ConnectionStrings": {
+    "FabConnectionString": "Data Source=lmgvmproj2k8\\rec;Initial Catalog=LMG_FAB;User=lmg_fab;Password=lmg_fab?;",
+    "ReflmgConnectionString": "Data Source=lmgvmproj2k8\\rec;Initial Catalog=Reflmg;User=lmg_fab;Password=lmg_fab?;"
+  },
+  "AppSettings": {
+    "LockRefreshDelay": 80,
+    "LockExpireDuration": 300
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    }
+  }
+}
